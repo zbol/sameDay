@@ -1,0 +1,9 @@
+#WC_SingleShipmentOrderTotalsSummary_td_Custom_5 {visibility: visible;}
+#newCheckoutShowGiftMessageArea{visibility: visible;}
+#newCheckoutGiftMessageArea {visibility: visible;}
+#giftMessageTo,
+#giftMessageFrom,
+#newCheckoutShowGiftMessageArea .col,
+#newCheckoutShowGiftMessageArea .clear,
+#order_details .wrap {display: none;}
+.sd-delivery .wrap {display: block !important}
