@@ -94,7 +94,7 @@
                 $('.giftMessageMessage .left').text('Instructions:').hide();
             }
             function shipLocalStorage() {
-                var upc = utag.data["cp.product_id"];
+                var upc = $('input.orderItemIds').val();
                 var shipMethod = {};
                 shipMethod.upc = upc;
                 shipMethod.sameDay = true;
@@ -104,40 +104,133 @@
             }
            
         },
-        changeShipping: function() {
-            if(($('#shippingAddressCreateEditFormDiv_1').length && localStorage.getItem("shipMethod") != null) || ($('#cart-body.has-steps.review').length && localStorage.getItem("shipMethod") != null) || ($('#cart-body.has-steps.review').length && localStorage.getItem("shipMethod") != null))  {
+        changeShipping: function() {                
+            if($('#shippingAddressCreateEditFormDiv_1').length && localStorage.getItem("shipMethod") != null)  {
+               var orderItemIds = JSON.parse(localStorage.shipMethod)['upc'],
+                    shipValue = 'checked';
+               updateTotalOrder();
+               updateOrderSummary();
+                $('#WC_SingleShipmentShippingMethodDetails_div_1 h3').after('<p class="same-day-method">Same-day Delivery: <span>$4.99</span> <a href="/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView?catalogId=10101&langId=-1&storeId=10152" class="ship-edit">Edit</a></div></p>');
+                $('.shipping_method_content').hide();
+                if(JSON.parse(localStorage.shipMethod)['validZip'] == 'undefined'){
+                    //shipValue = '';
+                }
+                $('#shppingMethodDiv').append('<input id="ship_giftWrapped" type="hidden" value="'+orderItemIds+'" checked="'+shipValue+'">'
+                            ).append('<input type="hidden" class="orderItemIds" name="orderItemId_1" value="'+orderItemIds+'">');
+                $('.mapquest-lookup').change(function() {
+                    shipCheckZip(this);
+                });
+                if( $('.mapquest-lookup').val()){
+                    var $mapquest = $('.mapquest-lookup');
+                    shipCheckZip($mapquest);
+                }
+                console.log('Shipping');
+            }
+            if($('#cart-body .section-header.billing').length && localStorage.getItem("shipMethod") != null) {
+                if (JSON.parse(localStorage.shipMethod)['validZip'] == true){
+                    var orderItemIds = JSON.parse(localStorage.shipMethod)['upc'],
+                    shipValue = 'checked';
+                    updateTotalOrder();
+                    updateOrderSummary();
+                    $('#shppingMethodDiv').append('<input id="ship_giftWrapped" type="hidden" value="'+orderItemIds+'" checked="'+shipValue+'">'
+                            ).append('<input type="hidden" class="orderItemIds" name="orderItemId_1" value="'+orderItemIds+'">');
+            
+                    $('.paypal').addClass('hide-button');
+                    $('.paypal').after('<p class="paypal-sameday">Check Out with PayPal is not available with same-day shipping</p>');
+                     console.log('validZip = True');
+                }else if (JSON.parse(localStorage.shipMethod)['validZip'] == false){
+                    var orderItemIds = JSON.parse(localStorage.shipMethod)['upc'],
+                        checkBox = $('#ship_giftWrapped');
+                    //NewCheckoutJS.removeGiftOptions(checkBox, orderItemIds);
+                    console.log('validZip = false');
+                }
+                console.log('Billing');
+            }
+            if($('#cart-body.has-steps.review').length && JSON.parse(localStorage.shipMethod)['validZip'] == true) {
+                updateTotalOrder();
+                updateOrderSummary();
+                $('#WC_SingleShipmentOrderTotalsSummary_td_Custom_5').text('Same-day Delivery');
+                $('.shipping_method_content').text('Same-day Delivery: $4.99');
+                $('#shippingMethodDiv .edit-link a').attr('href', '/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView?catalogId=10101&langId=-1&storeId=10152');
+                console.log('Review');
+            }
+            
+            function updateOrderSummary() {
+                $('#newCheckoutShowGiftMessageArea h3').text('Delivery Instructions For Courier:');
+                $('#newCheckoutShowGiftMessageArea').append('<div class="ship-edit-container"><a href="/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView?catalogId=10101&langId=-1&storeId=10152" class="ship-edit">Edit</a></div>');
+                $('#WC_SingleShipmentOrderTotalsSummary_td_Custom_5').text('Same-day Delivery');
+                $('#WC_SingleShipmentOrderTotalsSummary_td_7').hide();
+                $('#WC_SingleShipmentOrderTotalsSummary_td_8').hide();
+            }
+
+            function updateTotalOrder() {
                 if($('#WC_SingleShipmentOrderTotalsSummary_td_Custom_5').length){
                     var total = Number(piAmount).toFixed(2);
                         total =  Number(total);
                     var newTotal = total + 4.99;
                     $('#WC_SingleShipmentOrderTotalsSummary_td_13').text('$'+newTotal.toFixed(2));
                 }
-                $('#newCheckoutShowGiftMessageArea h3').text('Delivery Instructions For Courier:');
-                $('#newCheckoutShowGiftMessageArea').append('<div class="ship-edit-container"><a href="/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView?catalogId=10101&langId=-1&storeId=10152" class="ship-edit">Edit</a></div>');
-                $('#WC_SingleShipmentOrderTotalsSummary_td_Custom_5').text('Same-day Delivery');
-                $('#WC_SingleShipmentOrderTotalsSummary_td_7').hide();
-                $('#WC_SingleShipmentOrderTotalsSummary_td_8').hide();
-                
-                if($('#shippingAddressCreateEditFormDiv_1').length)  {
-                    $('#WC_SingleShipmentShippingMethodDetails_div_1 h3').after('<p class="same-day-method">Same-day Delivery: <span>$4.99</span> <a href="/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView?catalogId=10101&langId=-1&storeId=10152" class="ship-edit">Edit</a></div></p>');
+            }
+            function updateLocalStorage(e) {
+                var shipMethod = {};
+                if (localStorage.getItem("shipMethod") != null){
+                  var upcStorage = JSON.parse(localStorage.shipMethod)['upc'],
+                      sameDayStorage = JSON.parse(localStorage.shipMethod)['sameDay'];
+                }                    
+                shipMethod.upc = upcStorage;
+                shipMethod.sameDay = sameDayStorage;
+                shipMethod.validZip = e;
+                console.log( shipMethod );
+                localStorage.setItem('shipMethod', JSON.stringify(shipMethod));
+                console.log('local: '+ JSON.parse(localStorage.shipMethod));
+            }
+
+            function shipCheckZip(e) {
+                var $this = $(e);
+                var zipCode = ['10002', '10003', '10005', '10006', '10007', '10008', '10009', '10010', '10011', '10012', '10013', '10014', '10015', '10016', '10017', '10018', '10019', '10021', '10022', '10023', '10024', '10025', '10029', '10036', '10044', '10128'];
+                var zipEntered = $this.val();
+                var orderItemIds = JSON.parse(localStorage.shipMethod)['upc'];
+              
+                if (zipCode.indexOf(zipEntered) < 0){
+                    if(!$('.zip-sameday-error').length){
+                        $this.addClass('required').after('<span class="zip-sameday-error required">The address you entered is not eligible for same-day delivery. Please Change your address or continue shopping with two-day shipping</span>');
+                        $('.same-day-method').addClass('required').hide();
+                        $('#WC_SingleShipmentOrderTotalsSummary_td_Custom_5, #gift, #WC_SingleShipmentOrderTotalsSummary_td_Custom_6').hide();
+                        $('#WC_SingleShipmentOrderTotalsSummary_td_7, #WC_SingleShipmentOrderTotalsSummary_td_8').show();
+                        $('.shipping_method_content').show();
+                        var orderItemIds = JSON.parse(localStorage.shipMethod)['upc'];
+                        var checkBox = $('#ship_giftWrapped');
+                        checkBox.checked = false;
+                        $( document ).ajaxStart(function( continueToBilling, request, settings ) {
+                            if (JSON.parse(localStorage.shipMethod)['validZip'] == false){
+                                console.log('remove Gift Cart');
+                                NewCheckoutJS.removeGiftOptions(checkBox, orderItemIds);
+                                
+                            }
+                        });
+                       // NewCheckoutJS.removeGiftOptions(checkBox, orderItemIds);
+                        //javascript:NewCheckoutJS.removeGiftOptions(this, '2130147');
+                    }
+                    updateLocalStorage(false);
+                    console.log('NOPE' + orderItemIds);
+                }else{
+                    if($('.zip-sameday-error').length){
+                        $('.zip-sameday-error').remove();
+                      //  NewCheckoutJS.saveGiftOptions('99999999');
+                        console.log('saveGiftOptions');
+                    }
+                    updateLocalStorage(true);
+                    $this.removeClass('required');
+                    $('.same-day-method').removeClass('required').show();
                     $('.shipping_method_content').hide();
+                    $('#WC_SingleShipmentOrderTotalsSummary_td_Custom_5, #gift, #WC_SingleShipmentOrderTotalsSummary_td_Custom_6').show();
+                    $('#WC_SingleShipmentOrderTotalsSummary_td_7, #WC_SingleShipmentOrderTotalsSummary_td_8').hide();
+                    $('.same-day-method').removeClass('required');
+                    
+                    console.log('Zip Fine');
                 }
-
-                if($('#cart-body .section-header.billing').length) {
-                    $('.paypal').addClass('hide-button');
-                    $('.paypal').after('<p class="paypal-sameday">Check Out with PayPal is not available with same-day shipping</p>');
-                }
-                if($('#cart-body.has-steps.review').length) {
-                    $('#WC_SingleShipmentOrderTotalsSummary_td_Custom_5').text('Same-day Delivery');
-                    $('.shipping_method_content').text('Same-day Delivery: $4.99');
-                    $('#shippingMethodDiv .edit-link a').attr('href', '/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView?catalogId=10101&langId=-1&storeId=10152');
-                }
-                console.log('changeShipping');
-
-                function shipCheckZip() {
-                    var zipCode = ['10002', '10003', '10005', '10006', '10007', '10008', '10009', '10010', '10011', '10012', '10013', '10014', '10015', '10016', '10017', '10018', '10019', '10021', '10022', '10023', '10024', '10025', '10029', '10036', '10044', '10128'];
-
-                }
+                console.log('zip' + zipEntered );
+                console.log('indexOf'+zipCode.indexOf(zipEntered))
             }
         },
         init: function() {
