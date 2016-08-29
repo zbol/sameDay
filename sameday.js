@@ -108,7 +108,7 @@
             if($('#shippingAddressCreateEditFormDiv_1').length && localStorage.getItem("shipMethod") != null)  {
                var orderItemIds = JSON.parse(localStorage.shipMethod)['upc'],
                     shipValue = 'checked';
-               updateTotalOrder();
+              // updateTotalOrder();
                updateOrderSummary();
                 $('#WC_SingleShipmentShippingMethodDetails_div_1 h3').after('<p class="same-day-method">Same-day Delivery: <span>$4.99</span> <a href="/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView?catalogId=10101&langId=-1&storeId=10152" class="ship-edit">Edit</a></div></p>');
                 $('.shipping_method_content').hide();
@@ -130,7 +130,7 @@
                 if (JSON.parse(localStorage.shipMethod)['validZip'] == true){
                     var orderItemIds = JSON.parse(localStorage.shipMethod)['upc'],
                     shipValue = 'checked';
-                    updateTotalOrder();
+                    //updateTotalOrder();
                     updateOrderSummary();
                     $('#shppingMethodDiv').append('<input id="ship_giftWrapped" type="hidden" value="'+orderItemIds+'" checked="'+shipValue+'">'
                             ).append('<input type="hidden" class="orderItemIds" name="orderItemId_1" value="'+orderItemIds+'">');
@@ -147,7 +147,7 @@
                 console.log('Billing');
             }
             if($('#cart-body.has-steps.review').length && JSON.parse(localStorage.shipMethod)['validZip'] == true) {
-                updateTotalOrder();
+                //updateTotalOrder();
                 updateOrderSummary();
                 $('#WC_SingleShipmentOrderTotalsSummary_td_Custom_5').text('Same-day Delivery');
                 $('.shipping_method_content').text('Same-day Delivery: $4.99');

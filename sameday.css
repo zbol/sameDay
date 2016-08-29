@@ -1,6 +1,7 @@
 #WC_SingleShipmentOrderTotalsSummary_td_Custom_5 {visibility: visible;}
 #newCheckoutShowGiftMessageArea{visibility: visible;}
 #newCheckoutGiftMessageArea {visibility: visible;}
+#ship_giftWrapped
 #giftMessageTo,
 #giftMessageFrom,
 #newCheckoutShowGiftMessageArea .col,
@@ -13,7 +14,7 @@
 .hide-button {pointer-events: none; opacity: .6;}
 #newCheckoutShowGiftMessageArea {border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 10px 0px;}
 #cart-body #total-breakdown #promotions { margin-bottom: 20px; }
-.exp-non-qualify {clear: both; padding: 10px 20px 20px 150px; font-size: 13px !important;}
+.exp-non-qualify {clear: both; padding: 10px 20px 20px 20px; font-size: 13px !important; color: #E74C3C;}
 p.paypal-sameday {text-transform: none !important; font-size: 13px !important; padding-bottom: 10px;}
 .see-details {text-decoration: underline; cursor: pointer; margin-left: 22px;}
 #cart-body #cart-left .cart-form .product .wrap {width: 300px !important; position: relative; left: -115px !important;}
@@ -26,6 +27,8 @@ p.paypal-sameday {text-transform: none !important; font-size: 13px !important; p
 .giftMessageText {font-family: 'brandon_regular', Helvetica, Arial, sans-serif !important; text-transform: none !important; font-size: 12px !important; font-weight: normal !important;}
 .ship-edit {text-align: right; text-transform: uppercase; font-family: 'brandon_regular', Helvetica, Arial, sans-serif !important; text-decoration: underline; margin-top: 10px; display: block;}
 .ship-edit-container {width: 100%;}
-.same-day-method {font-family: 'brandon_medium', Helvetica, Arial, sans-serif !important; padding-top: 5px; font-size: 14px !important; font-weight: normal !important;}
+.same-day-method {font-family: 'brandon_medium', Helvetica, Arial, sans-serif !important; padding-top: 5px; font-size: 15px !important; font-weight: normal !important;}
 .same-day-method span {font-family: 'brandon_regular', Helvetica, Arial, sans-serif !important;}
 .same-day-method .ship-edit {text-align: left; font-size: 12px; display: inline-block; margin-top: 0px; padding-left: 5px;}
+.zip-sameday-error {padding-top: 5px;}
+.required {color: #E74C3C;}

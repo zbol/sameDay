@@ -12,24 +12,25 @@
 .exp-row h5 { font-size: 18px; line-height:24px; margin-top:0; text-transform: none;}
 	/* -- Header -- */
 #header_banner h1, #header_banner h2, #header_banner h3, #header_banner h4, #header_banner h5 {position: relative; box-sizing: border-box; text-align: center; z-index: 2;}
-#header_banner header .header-box {background-color: #111; color: #fff; text-align: center; position: relative; min-height: 200px;}
+#header_banner header .header-box {background-color: #111; color: #fff; text-align: center; position: relative;}
 #header_banner header .circle-header,
 #header_banner .header-box h1,
 #header_banner .header-box h2,
 #header_banner .header-box h3,
 #header_banner .header-box h4,
 #header_banner .header-box h5 {position: absolute; color: #fff; margin: 0 auto; text-align: center; top: 50%; left: 50%; -webkit-transform: translate(-50%,-50%); -moz-transform: translate(-50%,-50%); -ms-transform: translate(-50%,-50%); transform: translate(-50%,-50%); -webkit-transform-style: preserve-3d; -moz-transform-style: preserve-3d; transform-style: preserve-3d;}
+#header_banner h5 a {text-decoration: underline;}
 #header_banner header .circle-header {z-index: 0; background-color: #282828; width: 150px; height:150px; -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%;}
-#header_banner .sub-header-box {max-width: 800px; padding: 40px 40px 60px; box-sizing: border-box; margin: 0px auto;}
+#header_banner .sub-header-box {max-width: 800px; position:  relative; padding: 40px 40px 60px; box-sizing: border-box; margin: 0px auto;}
 #header_banner .sub-header-box h2 {padding-bottom: 20px;}
 #header_banner .sub-header-box h2 span { display:  block;  font-family: "brandon_regular", Helvetica, Arial,sans-serif; }
 #plp .search-term {margin-bottom: 0px !important; display: none !important;}
 #page-wrapper #page .banner-img {margin-bottom: 0px !important;}
-.banner-img .tooltipContent {font-family: 'brandon_medium', Helvetica, Arial, sans-serif;  font-size: 12px; text-transform: none !important;  font-weight: normal; font-style: normal;  display: none; position: absolute; bottom: 20px; background-color: #111; color: #FFF; padding: 20px; width: 455px; left: -30px;  z-index: 50; text-indent: 0;}
+.banner-img .tooltipContent {font-family: 'brandon_medium', Helvetica, Arial, sans-serif;  font-size: 12px; text-transform: none !important;  font-weight: normal; font-style: normal;  display: none; position: absolute; bottom: 20px; background-color: #111; color: #FFF; padding: 20px;  z-index: 50; text-indent: 0;}
 .banner-img .tooltipContent a {color: #fff; text-decoration: underline;}
-.banner-img .tooltipContent .arrow { position: absolute; bottom: -6px; left: 75px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid #111;}
+.banner-img .tooltipContent .arrow { position: absolute; display:  none; bottom: -6px; left: 75px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid #111;}
 .banner-img .tooltipContent .close-tool {position: absolute; padding: 7px; top: 0px; right: 0px; cursor: pointer}
-
+.tool-open-close {cursor: pointer;}
 </style>
 
 
@@ -40,8 +41,86 @@
 		</section>
 		<section class="sub-header-box">
 			<h2>DELIVERED RIGHT TO YOUR DOOR – TODAY <span>FOR ORDERS PLACED BY 5PM EST</span></h2>
-			<h5>Shop our current selection of sunglasses available for same-day delivery. Select Same-Day Shipping at checkout for just $4.99 more and we'll get them to you today. Same-day delivery only available in select zip codes. <a href="#" class="tool-open-close">Click here</a> for full delivery terms and conditions. </h5>
-			<span class="tooltipContent">Select Same-Day Shipping at checkout for just $4.99 more and we’ll get them to you today. Your items will arrive within 5 hours of your order being placed. Same-day delivery only available in select zip codes. Available in select zip codes only. Zip codes include: 10002, 10003, 10005, 10006, 10007, 10008, 10009, 10010, 10011, 10012, 10013, 10014, 10015, 10016, 10017, 10018, 10019, 10021, 10022, 10023, 10024, 10025, 10029, 10036, 10044, and 10128. Orders must be placed by 5pm local time in order to guarantee a 10pm delivery. Orders placed after the cutoff time will arrive by 2pm the next day. Same-day orders require a signature when the delivery arrives. Items subject to local availability. Same-day orders can be returned in store or can be returned via mail. <a target="_blank" title="Print Return Label" href="http://sunglass.upsrow.com/">Click here</a> to print a return label.<span class="close-tool tool-open-close">&#10006;</span><span class="arrow"></span></span>
+			<h5>Shop our current selection of sunglasses available for same-day delivery. Select Same-Day Shipping at checkout for just $4.99 more and we'll get them to you today. Same-day delivery only available in select zip codes. <a class="tool-open-close">Click here</a> for full delivery terms and conditions. </h5>
+			<span class="tooltipContent">Select Same-Day Shipping at checkout for just $4.99 more and we’ll get them to you today. Your items will arrive within 5 hours of your order being placed. Same-day delivery only available in select zip codes. Available in select zip codes only. Zip codes include: 10002, 10003, 10005, 10006, 10007, 10008, 10009, 10010, 10011, 10012, 10013, 10014, 10015, 10016, 10017, 10018, 10019, 10021, 10022, 10023, 10024, 10025, 10029, 10036, 10044, and 10128. Orders must be placed by 5pm local time in order to guarantee a 10pm delivery. Orders placed after the cutoff time will arrive by 2pm the next day. Same-day orders require a signature when the delivery arrives. Items subject to local availability. Same-day orders can be returned in store or can be returned via mail. <a target="_blank" title="Print Return Label" href="http://sunglass.upsrow.com/">Click here</a> to print a return label.<span class="close-tool tool-open-close">&#10006;</span><span class="arrow"><!--arrow--></span></span>
 		</section>
 	</header>
 </div><!-- /.row .exp-header -->
+
+<script>
+$(function(){
+	$('.tool-open-close').on('click', function() {
+  		$('#header_banner .tooltipContent').toggle();
+	});
+});
+
+$(function(){
+	$('.cart-button').append('<div class="same-day-pdp"><p>This Product Qualifies for <strong>Same-Day Delivery</strong><span>Ordered by 5pm Est</span></p><span class="arrow"><!--arrow--></span></div>');
+
+});
+
+</script>
+
+<style>
+	.same-day-pdp {background-color: #111; margin: 8px auto 0; width: 172px; text-align: center; position: relative; color: #FFF; padding: 8px 10px; box-sizing: border-box;}
+	.same-day-pdp p {font-family: 'brandon_regular', Helvetica, Arial, sans-serif; line-height: 13px; text-align: center; color: #FFF;   font-size: 11px; font-weight: normal; font-style: normal; }
+	.same-day-pdp p strong {font-family: 'brandon_bold', Helvetica, Arial, sans-serif;  font-size: 11px; font-weight: normal; line-height: 13px;}
+	.same-day-pdp p span {font-family: 'brandon_regular', Helvetica, Arial, sans-serif; padding-top: 2px; display: block; font-size: 10px;}
+	.same-day-pdp .arrow { position: absolute; top: -6px; left: 85px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid #111;}
+	.sgh #sgh_header_top #stg-globalban p a {color: #fff;}
+</style>
+
+
+
+<div class="genericESpot">
+<div class="gb-same-day" id="stg-globalban">
+<div class="promo_banner "><a class="desktop_promo_more-button"><i class="fa fa-plus"><!--link--></i></a>
+
+<h3><a href="/SearchDisplay?storeId=10152&catalogId=10101&langId=-1&pageSize=18&beginIndex=0&searchSource=Q&sType=SimpleSearch&resultCatEntryType=2&searchType=102&searchingFrom=global&showResultsPage=true&pageView=image&orderBy=default&searchTerm=same+day+delivery&SID=gb-same-day-us">GET THESE SHADES TODAY WITH SAME-DAY DELIVERY* </a></h3>
+</div>
+
+<div class="desktop_disclaimer stg-desktop_disclaimer_color" id="desktop_RTG-a_grow">
+<div class="desktop-disclaimer-wrap">
+<div class="desktop-disclaimer-text">
+<h4>FOR ORDERS PLACED BY 5PM EST</h4>
+<p>Select Same-Day Shipping at checkout for just $4.99 more and we’ll get them to you today. Your items will arrive within 5 hours of your order being placed. Same-day delivery only available in select zip codes. Available in select zip codes only. Zip codes include: 10002, 10003, 10005, 10006, 10007, 10008, 10009, 10010, 10011, 10012, 10013, 10014, 10015, 10016, 10017, 10018, 10019, 10021, 10022, 10023, 10024, 10025, 10029, 10036, 10044, and 10128. Orders must be placed by 5pm local time in order to guarantee a 10pm delivery. Orders placed after the cutoff time will arrive by 2pm the next day. Same-day orders require a signature when the delivery arrives. Items subject to local availability. Same-day orders can be returned in store or can be returned via mail. <a target="_blank" title="Print Return Label" href="http://sunglass.upsrow.com/">Click here</a> to print a return label.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+	$(function() {
+    $('body.no-global-banner').removeClass('no-global-banner');
+});
+!function(o){o.fn.mobileDisclaimer=function(t){o.extend({discID:""},t);return this.each(function(){var t=o(this),n=(o(document),o(document),t),i=t.find(".desktop_promo_more-button"),e=t.find(".desktop-close-button"),s=t.find(".desktop_disclaimer"),c=!1,l=(o.cookie("sghGlobalClose"),"hasScrolled"),a="startScrolling";e.on("touchstart click",function(t){n.removeClass(a).removeClass(l),c=!0,o.cookie("sghGlobalClose",!0)}),o(i).on("touchstart click",function(o){o.preventDefault();t.attr("id");s.slideToggle(300,function(){t.find("i")&&t.find("i").attr({"class":function(o,t){return"fa fa-minus"===t?"fa fa-plus":"fa fa-minus"}})})})})}}(jQuery);
+$('#stg-globalban.gb-same-day').mobileDisclaimer();
+$('.perksFooter .ship_tier-2 img').attr('src', '/wcsstore/SGH/experiences/US/seasonal/2016/same-day/PerksFooter_SameDayDelivery_081716.png').wrap('<a href="/SearchDisplay?storeId=10152&catalogId=10101&langId=-1&pageSize=18&beginIndex=0&searchSource=Q&sType=SimpleSearch&resultCatEntryType=2&searchType=102&searchingFrom=global&showResultsPage=true&pageView=image&orderBy=default&searchTerm=same+day+delivery&SID=gb-same-day-us" class="same-day-link"></a>' );
+</script>
+
+
+
+<div class="genericESpot">
+<div class="gb-same-day" id="stg-globalban">
+<div class="promo_banner "><a class="desktop_promo_more-button"><i class="fa fa-plus"><!--link--></i></a>
+
+<h3><a href="/SearchDisplay?storeId=10152&catalogId=10101&langId=-1&pageSize=18&beginIndex=0&searchSource=Q&sType=SimpleSearch&resultCatEntryType=2&searchType=102&searchingFrom=global&showResultsPage=true&pageView=image&orderBy=default&searchTerm=same+day+delivery&SID=gb-same-day-us">GET YOUR SHADES TODAY WITH SAME-DAY DELIVERY*  <span class="button button-white">SHOP NOW</span></a></h3>
+</div>
+
+<div class="desktop_disclaimer stg-desktop_disclaimer_color" id="desktop_RTG-a_grow">
+<div class="desktop-disclaimer-wrap">
+<div class="desktop-disclaimer-text">
+<h4>FOR ORDERS PLACED BY 5PM EST</h4>
+<p>Select Same-Day Shipping at checkout for just $4.99 more and we’ll get them to you today. Your items will arrive within 5 hours of your order being placed. Same-day delivery only available in select zip codes. Available in select zip codes only. Zip codes include: 10002, 10003, 10005, 10006, 10007, 10008, 10009, 10010, 10011, 10012, 10013, 10014, 10015, 10016, 10017, 10018, 10019, 10021, 10022, 10023, 10024, 10025, 10029, 10036, 10044, and 10128. Orders must be placed by 5pm local time in order to guarantee a 10pm delivery. Orders placed after the cutoff time will arrive by 2pm the next day. Same-day orders require a signature when the delivery arrives. Items subject to local availability. Same-day orders can be returned in store or can be returned via mail. <a target="_blank" style="color:#fff;" title="Print Return Label" href="http://sunglass.upsrow.com/">Click here</a> to print a return label.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
