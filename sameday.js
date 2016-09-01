@@ -9,9 +9,9 @@
         changeCart: function() {
             if($('#ShopCartPagingDisplay').length) {
             	$('.sd-delivery .wrap label').html('Click here for <span>same-day delivery</span> ($4.99)');
-            	$('.sd-delivery .wrap').append('<a class="see-details tool-open-close">See details</a> <span class="tooltipContent">Select Same-Day Shipping at checkout for just $4.99 more and we’ll get them to you today. Your items will arrive within 5 hours of your order being placed. Same-day delivery only available in select zip codes. Available in select zip codes only. Zip codes include: 10002, 10003, 10005, 10006, 10007, 10008, 10009, 10010, 10011, 10012, 10013, 10014, 10015, 10016, 10017, 10018, 10019, 10021, 10022, 10023, 10024, 10025, 10029, 10036, 10044, and 10128. Orders must be placed by 5pm local time in order to guarantee a 10pm delivery. Orders placed after the cutoff time will arrive by 2pm the next day. Same-day orders require a signature when the delivery arrives. Items subject to local availability. Same-day orders can be returned in store or can be returned via mail. <a target="_blank" title="Print Return Label" href="http://sunglass.upsrow.com/">Click here</a> to print a return label.<span class="close-tool tool-open-close">&#10006;</span><span class="arrow"></span></span>')
+            	$('.sd-delivery .wrap').append('<a class="see-details tool-open-close">See details</a> <span class="tooltipContent">Select Same-Day Shipping at checkout for just $4.99 more and we’ll get them to you today. Your items will arrive within 5 hours of your order being placed. Same-day delivery only available in select zip codes. Zip codes include: 10002, 10003, 10005, 10006, 10007, 10008, 10009, 10010, 10011, 10012, 10013, 10014, 10015, 10016, 10017, 10018, 10019, 10021, 10022, 10023, 10024, 10025, 10029, 10036, 10044, and 10128. Orders must be placed by 5pm local time in order to guarantee a 10pm delivery. Orders placed after the cutoff time will arrive by 2pm the next day. Same-day orders require a signature when the delivery arrives. Items subject to local availability. Same-day orders can be returned in store or can be returned via mail. <a target="_blank" title="Print Return Label" href="http://sunglass.upsrow.com/">Click here</a> to print a return label.<span class="close-tool tool-open-close">&#10006;</span><span class="arrow"></span></span>')
                 $('.sd-delivery .wrap').show();
-                if($('#newCheckoutGiftMessageArea').is(":visible") == true ){  
+                if($('#newCheckoutGiftMessageArea').is(":visible") == true ){
                     updateWrapBox(); 
                     shipLocalStorage();
                     updatePayPal()
@@ -21,8 +21,10 @@
                     console.log('visible')  
                 }
                 checkNoneQualify();
+                multipleQualify();
                 $(".giftWrapped").change(function() {
                     updateWrapBox();
+                    multipleQualify();
                     if($('#newCheckoutGiftMessageArea').is(":visible") == true ){
                         updatePayPal();
                         shipLocalStorage();
@@ -48,22 +50,71 @@
                     });
                 });
                 $('.tool-open-close').on('click', function() {
-                    $( '.wrap .tooltipContent' ).toggle();
+                    var $parent = $(this).closest('.wrap');
+                    $parent.find('.tooltipContent').toggle();
                 });
                 console.log('changeCart');
+            }
+            function multipleQualify() {
+                if($('.row.sd-delivery').length <= 2 && $('input[type="checkbox"]:checked').length){
+                    $('.wrap input[type="checkbox"]').addClass('is-checked');
+                    console.log('multipleQualify');
+                }
+                if($('.row.sd-delivery').length <= 2 && $('input[type="checkbox"]:checked').length < 1 ){
+                    $('.wrap input[type="checkbox"]').removeClass('is-checked');
+                    console.log('non-multipleQualify');
+                }
             }
             function checkNoneQualify() {
                 if($('.cart-form .row').length >= 2 && $('.cart-form .row:not(.sd-delivery)').length){
                     $('.sd-delivery').append('<p class="exp-non-qualify">Your order contains an item that doesn’t qualify for same-day delivery. All items will now ship via 2-day delivery. To receive same-day delivery, please remove non-qualifying item.</p>');
                     $('.sd-delivery .wrap').addClass('hide-button');
-                    if($('.sd-delivery input.giftWrapped').is(':checked')){
-                        $('.sd-delivery .wrap label' ).trigger( "click" );
+                    var $checked = $('.sd-delivery .giftWrapped:checked');
+                    if ($checked.length) {
+                        for (i = 0; i < $checked.length; i++) { 
+                            var $input = $checked[i].next( 'label.no-span');
+                            $input.trigger('click');
+                            console.log("unchecked");
+                        }
+                        console.log("checked");
                     }
+                    /*if($('.sd-delivery input.giftWrapped').is(':checked')){
+                        $('.sd-delivery .wrap label' ).trigger( "click" );
+                    }*/
                     console.log('none qualify');
 
                 }
+                if ($('.row.sd-delivery .value-qty').val() > 1){
+                    $('.sd-delivery .wrap').addClass('hide-button');
+                    var $checked = $('.sd-delivery .giftWrapped:checked');
+                    if ($checked.length) {
+                        $checked.each(function( index ) { { 
+                            var $input = $(this).next( 'label.no-span');
+                            $input.trigger('click');
+                            console.log("unchecked");
+                         });
+                        console.log("checked");
+                    }
+                    $('.row.sd-delivery .value-qty').each(function( index ) {
+                     var val = parseInt($(this).val());
+                      if(val > 1){
+                        var $parentSD = $(this).closest('.row.sd-delivery');
+                        if ($checked.length) {
+                            $(this).css( "border", "solid 1px #E74C3C" );
+                        }
+                        $parentSD.append('<p class="exp-non-qualify">Maximum quanity selected cannot exceed 1 for same-day delivery.</p>');
+                        console.log( 'index' + ": " +val );
+                        }
+                    });
+                    console.log('MAXIMUM QUANITY SELECTED CANNOT EXCEED 1 FOR SAME-DAY DELIVERY ')
+                }
+                if ($('.row.sd-delivery .value-qty').val() > 1){
+                    console.log('go')
+                }
+
 
             }
+
             function updatePayPal() {
                 $('.paypalbutton').addClass('hide-button');
                 if(!$('.paypal-sameday').length){
@@ -108,13 +159,9 @@
             if($('#shippingAddressCreateEditFormDiv_1').length && localStorage.getItem("shipMethod") != null)  {
                var orderItemIds = JSON.parse(localStorage.shipMethod)['upc'],
                     shipValue = 'checked';
-              // updateTotalOrder();
                updateOrderSummary();
                 $('#WC_SingleShipmentShippingMethodDetails_div_1 h3').after('<p class="same-day-method">Same-day Delivery: <span>$4.99</span> <a href="/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView?catalogId=10101&langId=-1&storeId=10152" class="ship-edit">Edit</a></div></p>');
                 $('.shipping_method_content').hide();
-                if(JSON.parse(localStorage.shipMethod)['validZip'] == 'undefined'){
-                    //shipValue = '';
-                }
                 $('#shppingMethodDiv').append('<input id="ship_giftWrapped" type="hidden" value="'+orderItemIds+'" checked="'+shipValue+'">'
                             ).append('<input type="hidden" class="orderItemIds" name="orderItemId_1" value="'+orderItemIds+'">');
                 $('.mapquest-lookup').change(function() {
@@ -132,6 +179,7 @@
                     shipValue = 'checked';
                     //updateTotalOrder();
                     updateOrderSummary();
+                    removeGiftWrapText();
                     $('#shppingMethodDiv').append('<input id="ship_giftWrapped" type="hidden" value="'+orderItemIds+'" checked="'+shipValue+'">'
                             ).append('<input type="hidden" class="orderItemIds" name="orderItemId_1" value="'+orderItemIds+'">');
             
@@ -141,18 +189,24 @@
                 }else if (JSON.parse(localStorage.shipMethod)['validZip'] == false){
                     var orderItemIds = JSON.parse(localStorage.shipMethod)['upc'],
                         checkBox = $('#ship_giftWrapped');
-                    //NewCheckoutJS.removeGiftOptions(checkBox, orderItemIds);
                     console.log('validZip = false');
                 }
                 console.log('Billing');
             }
             if($('#cart-body.has-steps.review').length && JSON.parse(localStorage.shipMethod)['validZip'] == true) {
-                //updateTotalOrder();
                 updateOrderSummary();
                 $('#WC_SingleShipmentOrderTotalsSummary_td_Custom_5').text('Same-day Delivery');
                 $('.shipping_method_content').text('Same-day Delivery: $4.99');
                 $('#shippingMethodDiv .edit-link a').attr('href', '/webapp/wcs/stores/servlet/AjaxOrderItemDisplayView?catalogId=10101&langId=-1&storeId=10152');
                 console.log('Review');
+            }
+            function removeGiftWrapText() {
+                var itemWrap = document.getElementsByClassName('brand-container');
+                for (i = 0; i < itemWrap.length; i++) { 
+                    var text = itemWrap[i].innerHTML.replace(/gift wrap/g, '');
+                    itemWrap[i].innerHTML = text;
+                    console.log('text: '+text)
+                }
             }
             
             function updateOrderSummary() {
@@ -201,12 +255,24 @@
                         var orderItemIds = JSON.parse(localStorage.shipMethod)['upc'];
                         var checkBox = $('#ship_giftWrapped');
                         checkBox.checked = false;
-                        $( document ).ajaxStart(function( continueToBilling, request, settings ) {
+                        $('#shippingAddressCreateEditFormDiv_1 .green-button ').on( "click", function() {
+                            console.log('click Billing');
+                        });
+                        $( document ).ajaxStart(function( getShippingInfoUTagClick, request, settings ) {
+                            document.getElementById('monetate_selectorHTML_65bc7c9e_0').innerHTML = '<div data-loader="ball-pulse"></div>';
+                            console.log('loading');
                             if (JSON.parse(localStorage.shipMethod)['validZip'] == false){
                                 console.log('remove Gift Cart');
                                 NewCheckoutJS.removeGiftOptions(checkBox, orderItemIds);
-                                
+                                if (localStorage.getItem("shipMethod") != null){
+                                    localStorage.removeItem('shipMethod');
+                                    console.log('localStorage.removeItem');
+                                }
                             }
+                        });
+                        $( document ).ajaxStop(function( continueToBilling, request, settings ) {
+                            document.getElementById('monetate_selectorHTML_65bc7c9e_0').innerHTML = '<svg height="15px" id="Capa_1" style="enable-background:new 0 0 397.129 397.129;" version="1.1" viewBox="0 0 397.129 397.129" width="15px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px"> <g> <path fill="#FFFFFF" d="M318.303,163.141h-18.242V85c0-46.869-38.131-85-85-85h-32.993c-46.869,0-85,38.131-85,85v78.141H78.825 c-9.314,0-16.866,7.551-16.866,16.865v200.258c0,9.312,7.552,16.865,16.866,16.865h239.479c9.314,0,16.865-7.553,16.865-16.865 V180.006C335.17,170.692,327.619,163.141,318.303,163.141z M147.068,85.001c0-19.299,15.701-35,35-35h32.993 c19.299,0,35,15.701,35,35v78.141H147.068V85.001z"></path> </g> </svg>';
+                            console.log('continueToBilling Stop');
                         });
                        // NewCheckoutJS.removeGiftOptions(checkBox, orderItemIds);
                         //javascript:NewCheckoutJS.removeGiftOptions(this, '2130147');
