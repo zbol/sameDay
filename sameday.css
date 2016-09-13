@@ -19,6 +19,7 @@
 p.paypal-sameday {text-transform: none !important; font-size: 13px !important; padding-bottom: 10px;}
 .see-details {text-decoration: underline; cursor: pointer; margin-left: 22px;}
 #cart-body #cart-left .cart-form .product .wrap {width: 300px !important; margin-bottom: 5px !important; position: relative; left: -115px !important;}
+#cart-body #cart-left .cart-form .sd-delivery .product .wrap label {display: block !important;}
 #cart-body #cart-left .cart-form .product .wrap label {margin-bottom: 0px !important; font-family: 'brandon_regular', Helvetica, Arial, sans-serif !important; font-size: 12px !important; font-weight: normal !important;}
 #cart-body #cart-left .cart-form .product .wrap label span {font-family: 'brandon_bold', Helvetica, Arial, sans-serif; font-size: 12px !important;}
 #cart-body .wrap .tooltipContent {font-family: 'brandon_medium', Helvetica, Arial, sans-serif;  font-size: 12px; text-transform: none !important;  font-weight: normal; font-style: normal;  display: none; position: absolute; bottom: 20px; background-color: #111; color: #FFF; padding: 20px; width: 455px; left: -30px;  z-index: 50; text-indent: 0;}
@@ -33,6 +34,7 @@ p.paypal-sameday {text-transform: none !important; font-size: 13px !important; p
 .same-day-method .ship-edit {text-align: left; font-size: 12px; display: inline-block; margin-top: 0px; padding-left: 5px;}
 .zip-sameday-error {padding-top: 5px;}
 .required {color: #E74C3C;}
+.row.sd-delivery {padding-bottom: 10px;}
 
 input.is-checked+label.no-span {background: transparent url(/wcsstore/MadisonsStorefrontAssetStore/images/redesignIcons/radio-checked.png) no-repeat !important; opacity: .5; pointer-events: none;}
 input.is-checked[type="checkbox"]:checked+label.no-span{opacity: 1; pointer-events: inherit;}
